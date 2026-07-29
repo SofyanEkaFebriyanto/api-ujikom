@@ -9,7 +9,7 @@ services:
       MYSQL_PASSWORD: api_ujikom
       MYSQL_ROOT_PASSWORD: passwordroot
     ports:
-      - "3306:3306"
+      - "3309:3306"
     networks:
       - API-UJIKOM
     volumes:
