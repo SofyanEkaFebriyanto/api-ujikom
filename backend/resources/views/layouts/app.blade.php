@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', 'Dashboard Admin')</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Sidebar -->
+        <div class="w-64 bg-gray-900 text-white flex flex-col">
+            <div class="p-5 text-xl font-bold tracking-wider border-b border-gray-800">
+                PANEL ADMIN
+            </div>
+            <div class="flex-1 p-4 space-y-2">
+                <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-white font-medium transition">Dashboard</a>
+                <a href="{{ route('admin.kategori.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition">Kelola Kategori</a>
+                <a href="{{ route('admin.alat.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition">Kelola Alat</a>
+                <a href="{{ route('admin.user.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition">Kelola User</a>
+            </div>
+            <div class="p-4 border-t border-gray-800 text-sm text-gray-400">
+                Logged in as: <span class="text-white font-semibold">{{ auth()->user()->name ?? '-' }}</span>
+            </div>
+        </div>
+
+        <!-- Main Content Container -->
+        <div class="flex-1 flex flex-col overflow-y-auto">
+
+            <!-- Navbar Atas -->
+            <header class="bg-white shadow-sm h-16 flex items-center justify-between px-6 z-10">
+                <div class="text-lg font-semibold text-gray-800">
+                    @yield('header-title', 'Dashboard')
+                </div>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+                        Logout
+                    </button>
+                </form>
+            </header>
+
+            <!-- Konten Utama Halaman -->
+            <main class="flex-1 p-6">
+                @yield('content')
+            </main>
+        </div>
+
+    </div>
+</body>
+</html>
