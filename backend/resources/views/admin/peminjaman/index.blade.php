@@ -62,6 +62,18 @@
                                 @csrf @method('DELETE')
                                 <button type="submit" class="text-red-600 hover:text-red-800 text-xs font-semibold">Hapus</button>
                             </form>
+                            @if(in_array($p->status, ['dipinjam', 'telat']) && !$p->pengembalian)
+                                <form action="{{ route('admin.pengembalian.store', $p->id) }}" method="POST" class="inline-flex items-center gap-1" onsubmit="return confirm('Catat pengembalian untuk peminjaman #{{ $p->id }}?')">
+                                    @csrf
+                                    <select name="kondisi_kembali" class="border rounded px-2 py-1 text-xs">
+                                        <option value="Baik">Baik</option>
+                                        <option value="Rusak Ringan">Rusak Ringan</option>
+                                        <option value="Rusak Berat">Rusak Berat</option>
+                                    </select>
+                                    <input type="number" name="denda" value="0" min="0" class="border rounded px-2 py-1 text-xs w-16" title="Denda">
+                                    <button type="submit" class="text-emerald-600 hover:text-emerald-800 text-xs font-semibold">Kembalikan</button>
+                                </form>
+                            @endif
                         </td>
                     </tr>
                 @empty
@@ -78,5 +90,3 @@
     </div>
 </div>
 @endsection
-
-</parameter>

@@ -20,6 +20,7 @@
         <table class="w-full text-left border-collapse">
             <thead>
                 <tr class="bg-gray-100 text-gray-600 text-sm uppercase tracking-wider">
+                    <th class="py-3 px-4 border-b">Gambar</th>
                     <th class="py-3 px-4 border-b">Nama Alat</th>
                     <th class="py-3 px-4 border-b">Kategori</th>
                     <th class="py-3 px-4 border-b">Stok</th>
@@ -30,6 +31,14 @@
             <tbody class="text-gray-700 text-sm">
                 @forelse($alats as $alat)
                     <tr class="hover:bg-gray-50 transition">
+                        <td class="py-3 px-4 border-b">
+                            @if($alat->gambar)
+                                <img src="{{ asset('storage/' . $alat->gambar) }}" alt="{{ $alat->nama_alat }}"
+                                    class="w-10 h-10 object-cover rounded border border-gray-300">
+                            @else
+                                -
+                            @endif
+                        </td>
                         <td class="py-3 px-4 border-b font-medium text-gray-900">{{ $alat->nama_alat }}</td>
                         <td class="py-3 px-4 border-b">{{ $alat->kategori->nama_kategori ?? '-' }}</td>
                         <td class="py-3 px-4 border-b">{{ $alat->stok }}</td>
@@ -51,7 +60,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="py-4 text-center text-gray-500">Belum ada data alat.</td>
+                        <td colspan="6" class="py-4 text-center text-gray-500">Belum ada data alat.</td>
                     </tr>
                 @endforelse
             </tbody>
@@ -59,5 +68,3 @@
     </div>
 </div>
 @endsection
-
-</parameter>

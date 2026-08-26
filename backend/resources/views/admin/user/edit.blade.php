@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="max-w-lg bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-    <form action="{{ route('admin.user.update', $user->id) }}" method="POST">
+    <form action="{{ route('admin.user.update', $user->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -21,6 +21,27 @@
             <input type="email" name="email" value="{{ old('email', $user->email) }}" required
                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
             @error('email') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-semibold mb-2">Foto Profile</label>
+            @if($user->foto_profile)
+                <img src="{{ asset('storage/' . $user->foto_profile) }}" alt="Foto {{ $user->name }}"
+                    class="w-16 h-16 object-cover rounded border border-gray-300 mb-2">
+            @endif
+            <input type="file" name="foto_profile" accept="image/*"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            @if($user->foto_profile)
+                <p class="text-gray-500 text-xs mt-1">Biarkan kosong jika tidak ingin mengganti foto</p>
+            @endif
+            @error('foto_profile') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-semibold mb-2">Password Baru (kosongkan jika tidak diganti)</label>
+            <input type="password" name="password" minlength="6"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            @error('password') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
         </div>
 
         <div class="mb-4">

@@ -42,6 +42,28 @@
         </table>
     </div>
 
+    @if(in_array($peminjaman->status, ['dipinjam', 'telat']) && !$peminjaman->pengembalian)
+    <div class="border-t pt-4">
+        <h3 class="font-semibold text-gray-800 mb-2">Catat Pengembalian Cepat</h3>
+        <form action="{{ route('admin.pengembalian.store', $peminjaman->id) }}" method="POST" class="flex items-end gap-3" onsubmit="return confirm('Catat pengembalian peminjaman #{{ $peminjaman->id }}?')">
+            @csrf
+            <div>
+                <label class="block text-xs text-gray-600 mb-1">Kondisi Kembali</label>
+                <select name="kondisi_kembali" class="border rounded px-3 py-2 text-sm">
+                    <option value="Baik">Baik</option>
+                    <option value="Rusak Ringan">Rusak Ringan</option>
+                    <option value="Rusak Berat">Rusak Berat</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs text-gray-600 mb-1">Denda (Rp)</label>
+                <input type="number" name="denda" value="0" min="0" class="border rounded px-3 py-2 text-sm w-32">
+            </div>
+            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">Catat Pengembalian</button>
+        </form>
+    </div>
+    @endif
+
     @if($peminjaman->pengembalian)
     <div class="border-t pt-4">
         <h3 class="font-semibold text-gray-800 mb-2">Data Pengembalian</h3>
@@ -59,5 +81,3 @@
     </div>
 </div>
 @endsection
-
-</parameter>

@@ -54,19 +54,36 @@
                                         </button>
                                     </form>
                                 @endif
-                                @if(in_array($peminjaman->status, ['dipinjam', 'telat']))
+                                @if($peminjaman->status === 'dipinjam' && !$peminjaman->pengembalian)
                                     <button type="button" onclick="document.getElementById('form-kembali-{{ $peminjaman->id }}').classList.toggle('hidden')"
                                         class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded text-xs font-semibold transition">
-                                        Kembali
+                                        Proses Pengembalian
                                     </button>
                                 @endif
+                                @if(in_array($peminjaman->status, ['dikembalikan']) || $peminjaman->pengembalian)
+                                    <div class="text-xs">
+                                        <span class="px-2 py-0.5 rounded text-xs font-semibold bg-emerald-100 text-emerald-700">Dikembalikan</span>
+                                        @if($peminjaman->pengembalian)
+                                            @if(!is_null($peminjaman->pengembalian->denda) && (int) $peminjaman->pengembalian->denda > 0)
+                                                <div class="mt-1 text-red-600">Denda: Rp{{ number_format($peminjaman->pengembalian->denda, 0, ',', '.') }}</div>
+                                            @else
+                                                <div class="mt-1 text-gray-500">Tanpa denda</div>
+                                            @endif
+                                        @endif
+                                    </div>
+                                @endif
                             </div>
-                            @if(in_array($peminjaman->status, ['dipinjam', 'telat']))
+                            @if($peminjaman->status === 'dipinjam' && !$peminjaman->pengembalian)
                                 <form id="form-kembali-{{ $peminjaman->id }}" action="{{ route('petugas.pengembalian.proses', $peminjaman->id) }}" method="POST" class="hidden mt-2 space-y-2 border-t pt-2">
                                     @csrf
-                                    <input type="text" name="kondisi_kembali" placeholder="Kondisi kembali (baik/rusak)"
-                                        class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded" required>
-                                    <input type="number" name="denda" placeholder="Denda (jika telat)"
+                                    <label class="block text-xs font-semibold text-gray-600">Kondisi Kembali</label>
+                                    <select name="kondisi_kembali" class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded" required>
+                                        <option value="Baik">Baik</option>
+                                        <option value="Rusak Ringan">Rusak Ringan</option>
+                                        <option value="Rusak Berat">Rusak Berat</option>
+                                    </select>
+                                    <label class="block text-xs font-semibold text-gray-600">Denda</label>
+                                    <input type="number" name="denda" min="0" value="0"
                                         class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded">
                                     <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded text-xs font-semibold transition">
                                         Simpan Pengembalian

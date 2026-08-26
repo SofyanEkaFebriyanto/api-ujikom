@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Peminjaman;
 use App\Models\Pengembalian;
 use App\Models\Alat;
+use App\Models\LogAktivitas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -31,6 +32,11 @@ class PetugasController extends Controller
                 $alat->stok -= $detail->jumlah;
                 $alat->save();
             }
+
+            LogAktivitas::create([
+                'user_id' => auth()->id(),
+                'aktivitas' => 'Menyetujui peminjaman #' . $peminjaman->id,
+            ]);
 
             DB::commit();
             return redirect()->back()->with('success', 'Peminjaman disetujui dan stok alat dikurangi.');
@@ -69,6 +75,11 @@ class PetugasController extends Controller
                 $alat->stok += $detail->jumlah;
                 $alat->save();
             }
+
+            LogAktivitas::create([
+                'user_id' => auth()->id(),
+                'aktivitas' => 'Memproses pengembalian peminjaman #' . $peminjaman->id,
+            ]);
 
             DB::commit();
             return redirect()->back()->with('success', 'Pengembalian berhasil dicatat dan stok dipulihkan.');

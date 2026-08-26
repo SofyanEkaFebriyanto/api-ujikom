@@ -12,13 +12,19 @@
         <!-- Sidebar -->
         <div class="w-64 bg-gray-900 text-white flex flex-col">
             <div class="p-5 text-xl font-bold tracking-wider border-b border-gray-800">
-                PANEL ADMIN
+                {{ strtoupper(auth()->user()->role ?? 'panel') }} PANEL
             </div>
             <div class="flex-1 p-4 space-y-2">
-                <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-white font-medium transition">Dashboard</a>
-                <a href="{{ route('admin.kategori.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition">Kelola Kategori</a>
-                <a href="{{ route('admin.alat.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition">Kelola Alat</a>
-                <a href="{{ route('admin.user.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition">Kelola User</a>
+                @if(auth()->user()?->role === 'admin')
+                    <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-white font-medium transition">Dashboard</a>
+                    <a href="{{ route('admin.kategori.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition">Kelola Kategori</a>
+                    <a href="{{ route('admin.alat.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition">Kelola Alat</a>
+                    <a href="{{ route('admin.peminjaman.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition">Kelola Peminjaman</a>
+                    <a href="{{ route('admin.pengembalian.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition">Kelola Pengembalian</a>
+                    <a href="{{ route('admin.user.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition">Kelola User</a>
+                @elseif(auth()->user()?->role === 'petugas')
+                    <a href="{{ route('petugas.peminjaman.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-white font-medium transition">Daftar Peminjaman</a>
+                @endif
             </div>
             <div class="p-4 border-t border-gray-800 text-sm text-gray-400">
                 Logged in as: <span class="text-white font-semibold">{{ auth()->user()->name ?? '-' }}</span>

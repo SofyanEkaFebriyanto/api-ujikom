@@ -51,7 +51,17 @@
                                         <div>{{ $detail->alat->nama_alat ?? '-' }} ({{ $detail->jumlah }}x)</div>
                                     @endforeach
                                 </td>
-                                <td>{{ $peminjaman->status }}</td>
+                                <td>
+                                    {{ $peminjaman->status }}
+                                    @if(in_array($peminjaman->status, ['dipinjam', 'telat']))
+                                        <form action="{{ route('peminjam.peminjaman.ajukanPengembalian', $peminjaman->id) }}" method="POST" class="mt-1" onsubmit="return confirm('Ajukan pengembalian alat ini?')">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-outline-success w-100">Ajukan Pengembalian</button>
+                                        </form>
+                                    @else
+                                        <small class="text-muted">Pengembalian diproses oleh petugas</small>
+                                    @endif
+                                </td>
                             </tr>
                         @empty
                             <tr>

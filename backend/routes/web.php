@@ -30,6 +30,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::put('/peminjaman/{id}/status', [AdminController::class, 'updateStatusPeminjaman'])->name('peminjaman.updateStatus');
     Route::delete('/peminjaman/{id}', [AdminController::class, 'destroyPeminjaman'])->name('peminjaman.destroy');
 
+    // CRUD Pengembalian (Admin)
+    Route::get('/pengembalian', [AdminController::class, 'indexPengembalian'])->name('pengembalian.index');
+    Route::post('/peminjaman/{id}/pengembalian', [AdminController::class, 'storePengembalian'])->name('pengembalian.store');
+    Route::put('/pengembalian/{id}', [AdminController::class, 'updatePengembalian'])->name('pengembalian.update');
+    Route::delete('/pengembalian/{id}', [AdminController::class, 'destroyPengembalian'])->name('pengembalian.destroy');
+
     // CRUD User
     Route::get('/users', [AdminController::class, 'indexUser'])->name('user.index');
     Route::get('/users/create', [AdminController::class, 'createUser'])->name('user.create');
@@ -63,6 +69,7 @@ Route::middleware(['auth', 'role:peminjam'])->prefix('peminjam')->name('peminjam
     Route::get('/katalog', [PeminjamController::class, 'katalogAlat'])->name('katalog');
     Route::post('/peminjaman/ajukan', [PeminjamController::class, 'ajukanPeminjaman'])->name('peminjaman.ajukan');
     Route::get('/riwayat', [PeminjamController::class, 'riwayatPeminjaman'])->name('riwayat');
+    Route::post('/peminjaman/{id}/ajukan-pengembalian', [PeminjamController::class, 'ajukanPengembalian'])->name('peminjaman.ajukanPengembalian');
 });
 
 // Guest Routes (Belum Login)

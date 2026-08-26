@@ -78,5 +78,3 @@ function addAlatRow() {
 }
 </script>
 @endsection
-
-</parameter>

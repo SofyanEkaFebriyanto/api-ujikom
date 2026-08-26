@@ -26,7 +26,7 @@ class Alat extends Model
 
     public function detailPinjam(): HasMany
     {
-        return $this->hasMany(DetailPinjam::class);
+        return $this->hasMany(DetilPinjam::class);
     }
 }
 

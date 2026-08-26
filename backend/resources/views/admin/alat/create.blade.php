@@ -9,7 +9,7 @@
 @endif
 
 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 max-w-2xl">
-    <form action="{{ route('admin.alat.store') }}" method="POST">
+    <form action="{{ route('admin.alat.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="space-y-4">
@@ -50,6 +50,13 @@
                 @error('status_kondisi') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
             </div>
 
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Gambar</label>
+                <input type="file" name="gambar" accept="image/*"
+                    class="w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border">
+                @error('gambar') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+            </div>
+
             <div class="flex gap-3 pt-2">
                 <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-lg transition">Simpan</button>
                 <a href="{{ route('admin.alat.index') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-5 py-2 rounded-lg transition">Batal</a>
@@ -58,5 +65,3 @@
     </form>
 </div>
 @endsection
-
-</parameter>
