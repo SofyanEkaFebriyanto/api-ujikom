@@ -529,4 +529,60 @@ class AdminController extends Controller
             return redirect()->back()->with('error', 'Gagal menghapus pengembalian: ' . $e->getMessage());
         }
     }
+
+    // Log Aktivitas: Menampilkan seluruh catatan log
+    public function indexLog(Request $request)
+    {
+        $search = $request->input('search');
+        $logs = LogAktivitas::with('user')
+            ->when($search, function ($query, $search) {
+                return $query->where('aktivitas', 'like', "%{$search}%")
+                    ->orWhereHas('user', function ($q) use ($search) {
+                        $q->where('name', 'like', "%{$search}%");
+                    });
+            })->latest()->paginate(10)->withQueryString();
+
+        return view('admin.log.index', compact('logs', 'search'));
+    }
+
+    // Laporan: filter rentang tanggal + status (data + cetak PDF)
+    public function indexLaporan(Request $request)
+    {
+        $request->validate([
+            'start_date' => 'nullable|date|date_format:Y-m-d',
+            'end_date' => 'nullable|date|date_format:Y-m-d|after_or_equal:start_date',
+            'status' => 'nullable|in:diajukan,dipinjam,dikembalikan,ditolak,telat',
+        ]);
+
+        $query = Peminjaman::with(['user', 'detailPinjam.alat', 'pengembalian.petugas']);
+
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $query->whereBetween('tgl_pinjam', [$request->start_date, $request->end_date]);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // cetak PDF dari hasil filter yang sama
+        if ($request->input('cetak') === 'pdf') {
+            $laporans = $query->latest()->get();
+
+            LogAktivitas::create([
+                'user_id' => auth()->id(),
+                'aktivitas' => 'Mencetak laporan peminjaman (PDF).',
+            ]);
+
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('admin.laporan.cetak', [
+                'laporans' => $laporans,
+                'filters' => $request->only(['start_date', 'end_date', 'status']),
+            ])->setPaper('a4', 'landscape');
+
+            return $pdf->download('laporan-peminjaman-' . now()->format('Ymd-His') . '.pdf');
+        }
+
+        $laporans = $query->latest()->paginate(10)->withQueryString();
+
+        return view('admin.laporan.index', compact('laporans'));
+    }
 }

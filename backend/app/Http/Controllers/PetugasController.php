@@ -88,4 +88,45 @@ class PetugasController extends Controller
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
+
+    // Laporan: filter rentang tanggal + status (data + cetak PDF)
+    public function indexLaporan(Request $request)
+    {
+        $request->validate([
+            'start_date' => 'nullable|date|date_format:Y-m-d',
+            'end_date' => 'nullable|date|date_format:Y-m-d|after_or_equal:start_date',
+            'status' => 'nullable|in:diajukan,dipinjam,dikembalikan,ditolak,telat',
+        ]);
+
+        $query = Peminjaman::with(['user', 'detailPinjam.alat', 'pengembalian.petugas']);
+
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $query->whereBetween('tgl_pinjam', [$request->start_date, $request->end_date]);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // cetak PDF dari hasil filter yang sama
+        if ($request->input('cetak') === 'pdf') {
+            $laporans = $query->latest()->get();
+
+            LogAktivitas::create([
+                'user_id' => auth()->id(),
+                'aktivitas' => 'Mencetak laporan peminjaman (PDF).',
+            ]);
+
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('petugas.laporan.cetak', [
+                'laporans' => $laporans,
+                'filters' => $request->only(['start_date', 'end_date', 'status']),
+            ])->setPaper('a4', 'landscape');
+
+            return $pdf->download('laporan-peminjaman-' . now()->format('Ymd-His') . '.pdf');
+        }
+
+        $laporans = $query->latest()->paginate(10)->withQueryString();
+
+        return view('petugas.laporan.index', compact('laporans'));
+    }
 }

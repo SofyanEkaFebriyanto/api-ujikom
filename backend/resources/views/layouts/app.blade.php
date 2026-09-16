@@ -22,8 +22,11 @@
                     <a href="{{ route('admin.peminjaman.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition">Kelola Peminjaman</a>
                     <a href="{{ route('admin.pengembalian.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition">Kelola Pengembalian</a>
                     <a href="{{ route('admin.user.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition">Kelola User</a>
+                    <a href="{{ route('admin.log.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition">Log Aktivitas</a>
+                    <a href="{{ route('admin.laporan.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition">Laporan</a>
                 @elseif(auth()->user()?->role === 'petugas')
                     <a href="{{ route('petugas.peminjaman.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-white font-medium transition">Daftar Peminjaman</a>
+                    <a href="{{ route('petugas.laporan.index') }}" class="block px-4 py-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition">Laporan</a>
                 @endif
             </div>
             <div class="p-4 border-t border-gray-800 text-sm text-gray-400">

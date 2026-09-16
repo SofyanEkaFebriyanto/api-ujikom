@@ -51,6 +51,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/kategori/{id}/edit', [AdminController::class, 'editKategori'])->name('kategori.edit');
     Route::put('/kategori/{id}', [AdminController::class, 'updateKategori'])->name('kategori.update');
     Route::delete('/kategori/{id}', [AdminController::class, 'destroyKategori'])->name('kategori.destroy');
+
+    // Log Aktivitas
+    Route::get('/log', [AdminController::class, 'indexLog'])->name('log.index');
+
+    // Laporan Peminjaman (+ cetak PDF)
+    Route::get('/laporan', [AdminController::class, 'indexLaporan'])->name('laporan.index');
 });
 
 // Petugas Route Group
@@ -61,6 +67,9 @@ Route::middleware(['auth', 'role:petugas,admin'])->prefix('petugas')->name('petu
 
     // Pengembalian & Denda
     Route::post('/pengembalian/{id}', [PetugasController::class, 'prosesPengembalian'])->name('pengembalian.proses');
+
+    // Laporan Peminjaman (+ cetak PDF)
+    Route::get('/laporan', [PetugasController::class, 'indexLaporan'])->name('laporan.index');
 });
 
 // Peminjam Route Group
