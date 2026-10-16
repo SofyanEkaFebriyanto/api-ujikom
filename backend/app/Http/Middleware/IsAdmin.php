@@ -14,6 +14,6 @@ class IsAdmin
             return $next($request);
         }
 
-        return response()->json(['message' => 'Akses Ditolak, anda bukan admin'], 403);
+        return response()->json(['message' => 'Akses ditolak. Anda bukan Admin.'], 403);
     }
 }

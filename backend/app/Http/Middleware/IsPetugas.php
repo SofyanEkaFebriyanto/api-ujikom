@@ -14,6 +14,6 @@ class IsPetugas
             return $next($request);
         }
 
-        return response()->json(['message' => 'Akses Ditolak, anda bukan petugas'], 403);
+        return response()->json(['message' => 'Akses ditolak. Anda bukan Petugas.'], 403);
     }
 }

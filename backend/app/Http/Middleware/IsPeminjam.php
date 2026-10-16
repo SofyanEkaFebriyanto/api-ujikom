@@ -14,6 +14,6 @@ class IsPeminjam
             return $next($request);
         }
 
-        return response()->json(['message' => 'Akses Ditolak, anda bukan peminjam'], 403);
+        return response()->json(['message' => 'Akses ditolak. Anda bukan Peminjam.'], 403);
     }
 }
