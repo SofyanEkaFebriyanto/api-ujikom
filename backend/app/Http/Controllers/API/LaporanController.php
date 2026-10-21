@@ -36,8 +36,8 @@ class LaporanController extends Controller
 
         // Filter: Rentang Tanggal Pinjam
         $query->when($request->filled('start_date') && $request->filled('end_date'), function ($q) use ($request) {
-            $q->whereBetween('tgl_pinjam', [$request->start_date,
-                $request->end_date]);
+            $q->whereBetween('tgl_pinjam', [$request->start_date . ' 00:00:00',
+                $request->end_date . ' 23:59:59']);
         });
 
         // Filter: Status Peminjaman

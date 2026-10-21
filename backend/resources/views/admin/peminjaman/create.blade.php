@@ -25,8 +25,8 @@
             </div>
 
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Rencana Kembali</label>
-                <input type="date" name="tgl_kembali_plan" value="{{ old('tgl_kembali_plan') }}" required
+                <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal & Jam Rencana Kembali</label>
+                <input type="datetime-local" name="tgl_kembali_plan" value="{{ old('tgl_kembali_plan') }}" required
                     class="w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border">
                 @error('tgl_kembali_plan') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
             </div>

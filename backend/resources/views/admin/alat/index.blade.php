@@ -32,7 +32,7 @@
                 @forelse($alats as $alat)
                     <tr class="hover:bg-gray-50 transition">
                         <td class="py-3 px-4 border-b">
-                            @if($alat->gambar)
+                            @if($alat->gambar && file_exists(public_path('storage/' . $alat->gambar)))
                                 <img src="{{ asset('storage/' . $alat->gambar) }}" alt="{{ $alat->nama_alat }}"
                                     class="w-10 h-10 object-cover rounded border border-gray-300">
                             @else

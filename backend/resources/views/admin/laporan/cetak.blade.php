@@ -41,15 +41,15 @@
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $laporan->user->name ?? '-' }}</td>
-                    <td>{{ $laporan->tgl_pinjam }}</td>
-                    <td>{{ $laporan->tgl_kembali_plan }}</td>
+                    <td>{{ $laporan->tgl_pinjam?->format('d-m-Y H:i') }}</td>
+                    <td>{{ $laporan->tgl_kembali_plan?->format('d-m-Y H:i') }}</td>
                     <td>
                         @foreach($laporan->detailPinjam as $detail)
                             <div>{{ $detail->alat->nama_alat ?? '-' }} ({{ $detail->jumlah }}x)</div>
                         @endforeach
                     </td>
                     <td>{{ $laporan->status }}</td>
-                    <td>{{ $laporan->pengembalian->tgl_kembali ?? '-' }}</td>
+                    <td>{{ $laporan->pengembalian?->tgl_kembali?->format('d-m-Y H:i') ?? '-' }}</td>
                     <td>Rp {{ number_format($laporan->pengembalian->denda ?? 0, 0, ',', '.') }}</td>
                 </tr>
             @empty

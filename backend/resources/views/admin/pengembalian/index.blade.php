@@ -32,7 +32,7 @@
                         <td class="py-3 px-4 border-b font-medium text-gray-900">
                             {{ $peng->peminjaman->user->name ?? '-' }} (Pinjam #{{ $peng->peminjaman_id }})
                         </td>
-                        <td class="py-3 px-4 border-b">{{ $peng->tgl_kembali?->format('Y-m-d') }}</td>
+                        <td class="py-3 px-4 border-b">{{ $peng->tgl_kembali?->format('d-m-Y H:i') }}</td>
                         <td class="py-3 px-4 border-b">
                             <form action="{{ route('admin.pengembalian.update', $peng->id) }}" method="POST" class="flex items-center gap-1" onsubmit="return confirm('Perbarui data pengembalian ini?')">
                                 @csrf @method('PUT')

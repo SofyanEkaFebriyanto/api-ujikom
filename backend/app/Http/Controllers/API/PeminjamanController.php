@@ -40,7 +40,7 @@ class PeminjamanController extends Controller
 
                 $peminjaman = Peminjaman::create([
                     'user_id' => $user->id,
-                    'tgl_pinjam' => now()->toDateString(),
+                    'tgl_pinjam' => now(),
                     'tgl_kembali_plan' => $request->tgl_kembali_plan,
                     'status' => 'diajukan',
                 ]);

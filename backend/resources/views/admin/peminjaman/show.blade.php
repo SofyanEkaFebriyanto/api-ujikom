@@ -8,8 +8,8 @@
     <div class="grid grid-cols-2 gap-4 text-sm">
         <div><span class="font-semibold text-gray-600">Peminjam:</span> {{ $peminjaman->user->name ?? '-' }}</div>
         <div><span class="font-semibold text-gray-600">Email:</span> {{ $peminjaman->user->email ?? '-' }}</div>
-        <div><span class="font-semibold text-gray-600">Tgl Pinjam:</span> {{ $peminjaman->tgl_pinjam?->format('Y-m-d') }}</div>
-        <div><span class="font-semibold text-gray-600">Tgl Rencana Kembali:</span> {{ $peminjaman->tgl_kembali_plan?->format('Y-m-d') }}</div>
+        <div><span class="font-semibold text-gray-600">Tgl Pinjam:</span> {{ $peminjaman->tgl_pinjam?->format('d-m-Y H:i') }}</div>
+        <div><span class="font-semibold text-gray-600">Tgl Rencana Kembali:</span> {{ $peminjaman->tgl_kembali_plan?->format('d-m-Y H:i') }}</div>
         <div>
             <span class="font-semibold text-gray-600">Status:</span>
             <span class="px-2 py-0.5 rounded text-xs font-semibold
@@ -68,7 +68,7 @@
     <div class="border-t pt-4">
         <h3 class="font-semibold text-gray-800 mb-2">Data Pengembalian</h3>
         <div class="grid grid-cols-2 gap-4 text-sm">
-            <div><span class="font-semibold text-gray-600">Tgl Kembali:</span> {{ $peminjaman->pengembalian->tgl_kembali?->format('Y-m-d') }}</div>
+            <div><span class="font-semibold text-gray-600">Tgl Kembali:</span> {{ $peminjaman->pengembalian->tgl_kembali?->format('d-m-Y H:i') }}</div>
             <div><span class="font-semibold text-gray-600">Kondisi:</span> {{ $peminjaman->pengembalian->kondisi_kembali }}</div>
             <div><span class="font-semibold text-gray-600">Denda:</span> Rp {{ number_format($peminjaman->pengembalian->denda, 0, ',', '.') }}</div>
             <div><span class="font-semibold text-gray-600">Petugas:</span> {{ $peminjaman->pengembalian->petugas->name ?? '-' }}</div>

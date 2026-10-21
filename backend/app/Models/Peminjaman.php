@@ -17,8 +17,8 @@ class Peminjaman extends Model
 
     protected function casts(): array {
         return [
-            'tgl_pinjam' => 'date:Y-m-d',
-            'tgl_kembali_plan' => 'date:Y-m-d',
+            'tgl_pinjam' => 'datetime:Y-m-d H:i:s',
+            'tgl_kembali_plan' => 'datetime:Y-m-d H:i:s',
         ];
     }
 

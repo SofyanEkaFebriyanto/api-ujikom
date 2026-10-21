@@ -13,6 +13,7 @@
             <a class="navbar-brand" href="#">Panel Peminjam</a>
             <div class="d-flex">
                 <a href="{{ route('peminjam.riwayat') }}" class="btn btn-outline-light btn-sm me-2">Riwayat Pinjam</a>
+                <a href="{{ route('profil.edit') }}" class="btn btn-outline-light btn-sm me-2">Profil</a>
                 <form action="{{ route('logout') }}" method="POST" class="d-inline">
                     @csrf
                     <button type="submit" class="btn btn-light btn-sm text-primary">Logout</button>
@@ -36,14 +37,15 @@
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
                     <div class="mb-3 w-50">
-                        <label class="form-label">Rencana Tanggal Kembali</label>
-                        <input type="date" name="tgl_kembali_plan" class="form-control" required>
+                        <label class="form-label">Rencana Tanggal & Jam Kembali</label>
+                        <input type="datetime-local" name="tgl_kembali_plan" class="form-control" required>
                     </div>
 
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th width="50">Pilih</th>
+                                <th>Foto</th>
                                 <th>Nama Alat</th>
                                 <th>Kategori</th>
                                 <th>Stok Tersedia</th>
@@ -56,6 +58,13 @@
                                     <td class="text-center">
                                         <input type="checkbox" name="alat_id[]" value="{{ $alat->id }}" class="form-check-input">
                                     </td>
+                                    <td>
+                                        @if($alat->gambar && file_exists(public_path('storage/' . $alat->gambar)))
+                                            <img src="{{ asset('storage/' . $alat->gambar) }}" alt="Foto {{ $alat->nama_alat }}" width="64" height="64" style="object-fit: cover;" class="rounded">
+                                        @else
+                                            <span class="text-muted small">Tidak ada foto</span>
+                                        @endif
+                                    </td>
                                     <td>{{ $alat->nama_alat }}</td>
                                     <td>{{ $alat->kategori->nama_kategori ?? '-' }}</td>
                                     <td>{{ $alat->stok }}</td>
@@ -65,7 +74,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="text-center">Tidak ada alat yang tersedia saat ini.</td>
+                                    <td colspan="6" class="text-center">Tidak ada alat yang tersedia saat ini.</td>
                                 </tr>
                             @endforelse
                         </tbody>

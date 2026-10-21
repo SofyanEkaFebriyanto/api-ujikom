@@ -51,10 +51,13 @@
                     <a href="{{ route('admin.laporan.index') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 text-sm rounded-lg flex items-center transition">
                         Reset
                     </a>
-                    <button type="submit" name="cetak" value="pdf" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 text-sm font-semibold rounded-lg transition whitespace-nowrap">
-                        Cetak PDF
-                    </button>
                 @endif
+                <button type="submit" name="cetak" value="pdf" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 text-sm font-semibold rounded-lg transition whitespace-nowrap">
+                    Cetak PDF
+                </button>
+                <button type="submit" name="cetak" value="excel" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 text-sm font-semibold rounded-lg transition whitespace-nowrap">
+                    Cetak Excel
+                </button>
             </div>
         </form>
     </div>
@@ -77,8 +80,8 @@
                     <tr class="hover:bg-gray-50 transition">
                         <td class="py-3 px-4 border-b text-center">{{ $laporans->firstItem() + $index }}</td>
                         <td class="py-3 px-4 border-b font-medium text-gray-900">{{ $laporan->user->name ?? '-' }}</td>
-                        <td class="py-3 px-4 border-b">{{ $laporan->tgl_pinjam }}</td>
-                        <td class="py-3 px-4 border-b">{{ $laporan->tgl_kembali_plan }}</td>
+                        <td class="py-3 px-4 border-b">{{ $laporan->tgl_pinjam?->format('d-m-Y H:i') }}</td>
+                        <td class="py-3 px-4 border-b">{{ $laporan->tgl_kembali_plan?->format('d-m-Y H:i') }}</td>
                         <td class="py-3 px-4 border-b">
                             @foreach($laporan->detailPinjam as $detail)
                                 <div>{{ $detail->alat->nama_alat ?? '-' }} ({{ $detail->jumlah }}x)</div>

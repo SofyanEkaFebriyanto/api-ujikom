@@ -3,7 +3,9 @@ services:
   mysql-server:
     image: mysql:8.0
     container_name: MySQL-API
+    command: --default-time-zone=+07:00
     environment:
+      TZ: Asia/Jakarta
       MYSQL_DATABASE: API_ujikom
       MYSQL_USER: api_ujikom
       MYSQL_PASSWORD: api_ujikom

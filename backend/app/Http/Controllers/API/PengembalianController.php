@@ -75,7 +75,7 @@ class PengembalianController extends Controller
                 // 1. Insert data ke tabel pengembalian
                 $pengembalian = Pengembalian::create([
                     'peminjaman_id' => $peminjaman->id,
-                    'tgl_kembali' => now()->toDateString(),
+                    'tgl_kembali' => now(),
                     'kondisi_kembali' => $request->kondisi_kembali,
                     'denda' => $request->denda ?? 0, // Default 0 jika null
                     'petugas_id' => auth()->id(), // Ambil ID user (petugas) yang sedang login

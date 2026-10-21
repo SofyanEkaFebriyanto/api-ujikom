@@ -54,6 +54,11 @@
                 Masuk
             </button>
         </form>
+
+        <p class="text-center text-sm text-gray-500 mt-4">
+            Belum punya akun?
+            <a href="{{ route('register') }}" class="text-blue-600 font-semibold hover:underline">Daftar sebagai peminjam</a>
+        </p>
     </div>
 
 </body>

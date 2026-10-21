@@ -12,21 +12,21 @@ class PengembalianSeeder extends Seeder
         $pengembalian = [
             [
                 'peminjaman_id' => 1,
-                'tgl_kembali' => '2026-06-04',
+                'tgl_kembali' => '2026-06-04 14:25:00',
                 'kondisi_kembali' => 'Lengkap dan Berfungsi Baik',
                 'denda' => 0,
                 'petugas_id' => 2,
             ],
             [
                 'peminjaman_id' => 2,
-                'tgl_kembali' => '2026-06-05',
+                'tgl_kembali' => '2026-06-05 13:40:00',
                 'kondisi_kembali' => 'Lengkap dan Berfungsi Baik',
                 'denda' => 0,
                 'petugas_id' => 2,
             ],
             [
                 'peminjaman_id' => 3,
-                'tgl_kembali' => '2026-06-09',
+                'tgl_kembali' => '2026-06-09 09:05:00',
                 'kondisi_kembali' => 'Lengkap, Casing Sedikit Tergores',
                 'denda' => 30000,
                 'petugas_id' => 2,

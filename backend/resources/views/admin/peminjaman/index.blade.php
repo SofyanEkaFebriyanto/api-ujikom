@@ -36,8 +36,8 @@
                     <tr class="hover:bg-gray-50 transition">
                         <td class="py-3 px-4 border-b">{{ $p->id }}</td>
                         <td class="py-3 px-4 border-b font-medium text-gray-900">{{ $p->user->name ?? '-' }}</td>
-                        <td class="py-3 px-4 border-b">{{ $p->tgl_pinjam?->format('Y-m-d') }}</td>
-                        <td class="py-3 px-4 border-b">{{ $p->tgl_kembali_plan?->format('Y-m-d') }}</td>
+                        <td class="py-3 px-4 border-b">{{ $p->tgl_pinjam?->format('d-m-Y H:i') }}</td>
+                        <td class="py-3 px-4 border-b">{{ $p->tgl_kembali_plan?->format('d-m-Y H:i') }}</td>
                         <td class="py-3 px-4 border-b">
                             <span class="px-2 py-0.5 rounded text-xs font-semibold
                                 @if($p->status === 'dipinjam') bg-blue-100 text-blue-700

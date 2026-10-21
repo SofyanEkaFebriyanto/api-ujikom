@@ -101,7 +101,10 @@ class PetugasController extends Controller
         $query = Peminjaman::with(['user', 'detailPinjam.alat', 'pengembalian.petugas']);
 
         if ($request->filled('start_date') && $request->filled('end_date')) {
-            $query->whereBetween('tgl_pinjam', [$request->start_date, $request->end_date]);
+            $query->whereBetween('tgl_pinjam', [
+                $request->start_date . ' 00:00:00',
+                $request->end_date . ' 23:59:59',
+            ]);
         }
 
         if ($request->filled('status')) {
@@ -123,6 +126,22 @@ class PetugasController extends Controller
             ])->setPaper('a4', 'landscape');
 
             return $pdf->download('laporan-peminjaman-' . now()->format('Ymd-His') . '.pdf');
+        }
+
+        // cetak Excel dari hasil filter yang sama
+        if ($request->input('cetak') === 'excel') {
+            $laporans = $query->latest()->get();
+
+            LogAktivitas::create([
+                'user_id' => auth()->id(),
+                'aktivitas' => 'Mencetak laporan peminjaman (Excel).',
+            ]);
+
+            return response()->view('laporan.excel', [
+                'laporans' => $laporans,
+                'filters' => $request->only(['start_date', 'end_date', 'status']),
+            ])->header('Content-Type', 'application/vnd.ms-excel')
+              ->header('Content-Disposition', 'attachment; filename="laporan-peminjaman-' . now()->format('Ymd-His') . '.xls"');
         }
 
         $laporans = $query->latest()->paginate(10)->withQueryString();

@@ -28,8 +28,8 @@
                 @forelse($peminjamans as $peminjaman)
                     <tr class="hover:bg-gray-50 transition">
                         <td class="py-3 px-4 border-b font-medium text-gray-900">{{ $peminjaman->user->name ?? '-' }}</td>
-                        <td class="py-3 px-4 border-b">{{ $peminjaman->tgl_pinjam }}</td>
-                        <td class="py-3 px-4 border-b">{{ $peminjaman->tgl_kembali_plan }}</td>
+                        <td class="py-3 px-4 border-b">{{ $peminjaman->tgl_pinjam?->format('d-m-Y H:i') }}</td>
+                        <td class="py-3 px-4 border-b">{{ $peminjaman->tgl_kembali_plan?->format('d-m-Y H:i') }}</td>
                         <td class="py-3 px-4 border-b">
                             @foreach($peminjaman->detailPinjam as $detail)
                                 <div>{{ $detail->alat->nama_alat ?? '-' }} ({{ $detail->jumlah }}x)</div>

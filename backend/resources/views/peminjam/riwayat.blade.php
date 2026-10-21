@@ -13,6 +13,7 @@
             <a class="navbar-brand" href="#">Panel Peminjam</a>
             <div class="d-flex">
                 <a href="{{ route('peminjam.katalog') }}" class="btn btn-outline-light btn-sm me-2">Katalog</a>
+                <a href="{{ route('profil.edit') }}" class="btn btn-outline-light btn-sm me-2">Profil</a>
                 <form action="{{ route('logout') }}" method="POST" class="d-inline">
                     @csrf
                     <button type="submit" class="btn btn-light btn-sm text-primary">Logout</button>
@@ -44,8 +45,8 @@
                         @forelse($peminjamans as $index => $peminjaman)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $peminjaman->tgl_pinjam }}</td>
-                                <td>{{ $peminjaman->tgl_kembali_plan }}</td>
+                                <td>{{ $peminjaman->tgl_pinjam?->format('d-m-Y H:i') }}</td>
+                                <td>{{ $peminjaman->tgl_kembali_plan?->format('d-m-Y H:i') }}</td>
                                 <td>
                                     @foreach($peminjaman->detailPinjam as $detail)
                                         <div>{{ $detail->alat->nama_alat ?? '-' }} ({{ $detail->jumlah }}x)</div>

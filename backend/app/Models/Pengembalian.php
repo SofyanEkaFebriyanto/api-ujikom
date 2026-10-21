@@ -15,7 +15,7 @@ class Pengembalian extends Model
 
     protected function casts(): array {
         return [
-            'tgl_kembali' => 'date:Y-m-d',
+            'tgl_kembali' => 'datetime:Y-m-d H:i:s',
             'denda' => 'integer',
         ];
     }
