@@ -28,6 +28,7 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/var/www:Z
+      - ./backend/storage/app/public:/var/www/public/storage:Z
     command: php artisan serve --host=0.0.0.0 --port=8000
     depends_on:
       - mysql-server
